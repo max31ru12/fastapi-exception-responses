@@ -6,18 +6,20 @@ authors = [
     {name = "max31ru12", email = "maxevg72@gmail.com"}
 ]
 readme = "README.md"
-licensce = {text = "MIT"}
+license = {text = "MIT"}
+requires-python = ">=3.11"
 dependencies = [
     "starlette (>=0.46.2,<0.47.0)"
 ]
 
 
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.5"
 faker = "^37.1.0"
 ruff = "^0.11.9"
+pre-commit = "^4.2.0"
 
