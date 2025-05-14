@@ -4,7 +4,7 @@ import pytest
 from faker import Faker
 from starlette.exceptions import HTTPException
 
-from src.fastapi_responses.core import Responses
+from src.fastapi_exception_responses.core import Responses
 
 from tests.utils import assert_value_type, assert_response_structure, get_responses
 

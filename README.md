@@ -9,9 +9,10 @@ defined as tuples of status code and detail
 ### Configuration
 
 ```python
-from fastapi import APIRouter()
-from fastapi_responses import Responses
+from fastapi import APIRouter
 
+()
+from fastapi_exception_responses import Responses
 
 router = APIRouter()
 

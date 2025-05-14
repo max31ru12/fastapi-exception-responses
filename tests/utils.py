@@ -2,7 +2,7 @@ from typing import Any
 
 import pytest
 
-from fastapi_responses.core import Responses
+from fastapi_exception_responses.core import Responses
 
 
 def prepare_arg_name(arg_name: str):

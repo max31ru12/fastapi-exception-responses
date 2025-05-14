@@ -1,5 +1,5 @@
 [project]
-name = "fastapi-responses"
+name = "fastapi-exception-responses"
 version = "0.1.0"
 description = "fastapi-responses generates HTTPExceptions and OpenAPI description for status codes"
 authors = [
