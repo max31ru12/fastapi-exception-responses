@@ -7,10 +7,14 @@ class Responses:
     __original_attrs = {}
 
     @classmethod
-    def get_responses(cls, description: str = None) -> dict[int | str, dict[str, Any]] | None:
+    def get_responses(cls) -> dict[int | str, dict[str, Any]]:
 
-        if description is not None and not isinstance(description, str):
-            raise TypeError(f"Description must be str. Got: {type(description)}")
+        """
+        Generates documentation for OpenAPI and Endpoints starlette HTTPExceptions based on class attributes
+        defined as tuples of status code and detail
+
+        :return: A valid dictionary for the FastAPI decorator param 'responses'
+        """
 
         responses_dict = {}
         for attr in dir(cls):
@@ -37,12 +41,13 @@ class Responses:
                     cls.__original_attrs[attr] = status_code, detail
                 elif attr in cls.__original_attrs:
                     status_code, detail = cls.__original_attrs[attr]
+
                 else:
                     raise TypeError(f"Attribute {attr} must be a (status_code, detail) tuple. Got: {value}")
 
                 if status_code not in responses_dict.keys():
                     responses_dict[status_code] = {
-                        "description": description or f"{status_code} STATUS CODE",
+                        "description": f"{status_code} status code description",
                         "content": {"application/json": {"examples": {}}},
                     }
 

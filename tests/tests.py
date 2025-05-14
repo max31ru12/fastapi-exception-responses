@@ -1,4 +1,4 @@
-from typing import Callable, Any
+from typing import Callable
 
 import pytest
 from faker import Faker
@@ -54,7 +54,7 @@ def test_multiple_detail(responses_args: Callable):
     })
 
     assert_response_structure(responses, code1, argname1, detail1)
-    assert_response_structure(responses, code1, argname2, detail2)
+    assert_response_structure(responses, str(code1), argname2, detail2)
 
 
 def test_attr_is_replaced_with_http_exception(responses_args: Callable):
@@ -122,12 +122,11 @@ def test_invalid_code_type(faker: Faker):
     assert_value_type(faker.pylist(nb_elements=2))
 
 
-def test_invalid_description(faker: Faker, responses_args: Callable):
+def test_valid_description(faker: Faker, responses_args: Callable):
     argname, code, detail = responses_args()
-    description = faker.pystr()
-    responses = get_responses({argname: (code, detail)}, description=description)
+    responses = get_responses({argname: (code, detail)})
 
-    assert responses[code]["description"] == description
+    assert responses[code]["description"] == f"{code} status code description"
 
 
 def test_invalid_tuple_len(responses_args: Callable, faker: Faker):

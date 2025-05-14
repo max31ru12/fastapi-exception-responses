@@ -1,20 +1,20 @@
 [project]
 name = "fastapi-responses"
 version = "0.1.0"
-description = ""
+description = "fastapi-responses generates HTTPExceptions and OpenAPI description for status codes"
 authors = [
-    {name = "max31ru12",email = "maxevg72@gmail.com"}
+    {name = "max31ru12", email = "maxevg72@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.11"
+licensce = {text = "MIT"}
 dependencies = [
     "starlette (>=0.46.2,<0.47.0)"
 ]
 
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.5"

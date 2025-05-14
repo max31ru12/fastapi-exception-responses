@@ -15,9 +15,12 @@ def assert_value_type(value: Any):
         responses_class.get_responses()
 
 
-def assert_response_structure(responses: dict, code: int, arg_name: str, detail: str, description: str = None):
+def assert_response_structure(responses: dict, code: int | str, arg_name: str, detail: str,):
     prepared_name = prepare_arg_name(arg_name)
     prepared_name_lower = prepared_name.lower()
+
+    if isinstance(code, str) and code.isdigit():
+        code = int(code)
 
     examples = responses[code]["content"]["application/json"]["examples"]
 
@@ -25,12 +28,8 @@ def assert_response_structure(responses: dict, code: int, arg_name: str, detail:
     assert prepared_name_lower in examples.keys()
     assert prepared_name == examples[prepared_name_lower]["summary"]
     assert detail == examples[prepared_name_lower]["value"]["detail"]
-
-    if description is not None:
-        assert responses[code]["description"] == prepared_name
-    else:
-        assert responses[code]["description"] == f"{code} STATUS CODE"
+    assert responses[code]["description"] == f"{code} status code description"
 
 
-def get_responses(arg_dict: dict, description: str = None):
-    return type("MultipleResponses", (Responses,), arg_dict).get_responses(description)
+def get_responses(arg_dict: dict):
+    return type("MultipleResponses", (Responses,), arg_dict).get_responses()
