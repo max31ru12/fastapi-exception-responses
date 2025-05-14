@@ -35,10 +35,12 @@ def test_multiple_responses(responses_args: Callable):
     argname1, code1, detail1 = responses_args()
     argname2, code2, detail2 = responses_args()
 
-    responses = get_responses({
-        argname1: (code1, detail1),
-        argname2: (code2, detail2),
-    })
+    responses = get_responses(
+        {
+            argname1: (code1, detail1),
+            argname2: (code2, detail2),
+        }
+    )
 
     assert_response_structure(responses, code1, argname1, detail1)
     assert_response_structure(responses, code2, argname2, detail2)
@@ -48,10 +50,12 @@ def test_multiple_detail(responses_args: Callable):
     argname1, code1, detail1 = responses_args()
     argname2, _, detail2 = responses_args()
 
-    responses = get_responses({
-        argname1: (code1, detail1),
-        argname2: (code1, detail2),
-    })
+    responses = get_responses(
+        {
+            argname1: (code1, detail1),
+            argname2: (code1, detail2),
+        }
+    )
 
     assert_response_structure(responses, code1, argname1, detail1)
     assert_response_structure(responses, str(code1), argname2, detail2)
@@ -71,12 +75,13 @@ def test_attr_is_replaced_with_http_exception(responses_args: Callable):
 
 
 def test_multiple_inheritance(responses_args: Callable):
-
     argname, code, detail = responses_args()
     child_argname, child_code, child_detail = responses_args()
 
     ParentResponse = type("SimpleResponse", (Responses,), {argname: (code, detail)})
-    ChildResponses = type("SimpleResponse", (ParentResponse,), {child_argname: (child_code, child_detail)})
+    ChildResponses = type(
+        "SimpleResponse", (ParentResponse,), {child_argname: (child_code, child_detail)}
+    )
 
     responses = ChildResponses.get_responses()
 
@@ -91,11 +96,13 @@ def test_invalid_attr_name(responses_args: Callable):
     argname2 = f"_{argname}"
     argname3 = f"__{argname}"
 
-    responses = get_responses({
-        argname1: (code, detail),
-        argname2: (code, detail),
-        argname3: (code, detail),
-    })
+    responses = get_responses(
+        {
+            argname1: (code, detail),
+            argname2: (code, detail),
+            argname3: (code, detail),
+        }
+    )
 
     assert responses == {}
 
@@ -136,4 +143,4 @@ def test_invalid_tuple_len(responses_args: Callable, faker: Faker):
         get_responses({argname: (code, detail, faker.pystr())})
 
     with pytest.raises(TypeError):
-        get_responses({argname: (code, )})
+        get_responses({argname: (code,)})

@@ -1,6 +1,6 @@
 # fastapi-responses
 
-FastAPI Responses generates documentation for OpenAPI and Endpoints **starlette** 
+FastAPI Responses generates documentation for OpenAPI and Endpoints **starlette**
 `HTTPExceptions` based on class attributes
 defined as tuples of status code and detail
 

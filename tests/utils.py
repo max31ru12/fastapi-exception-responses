@@ -15,7 +15,12 @@ def assert_value_type(value: Any):
         responses_class.get_responses()
 
 
-def assert_response_structure(responses: dict, code: int | str, arg_name: str, detail: str,):
+def assert_response_structure(
+    responses: dict,
+    code: int | str,
+    arg_name: str,
+    detail: str,
+):
     prepared_name = prepare_arg_name(arg_name)
     prepared_name_lower = prepared_name.lower()
 

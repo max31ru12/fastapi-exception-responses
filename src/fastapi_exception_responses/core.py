@@ -8,7 +8,6 @@ class Responses:
 
     @classmethod
     def get_responses(cls) -> dict[int | str, dict[str, Any]]:
-
         """
         Generates documentation for OpenAPI and Endpoints starlette HTTPExceptions based on class attributes
         defined as tuples of status code and detail
@@ -18,19 +17,23 @@ class Responses:
 
         responses_dict = {}
         for attr in dir(cls):
-
-            if not attr.startswith("__") and not callable(getattr(cls, attr)) and not attr.startswith("_"):
-
+            if (
+                not attr.startswith("__")
+                and not callable(getattr(cls, attr))
+                and not attr.startswith("_")
+            ):
                 value = getattr(cls, attr)
 
                 if isinstance(value, tuple) and len(value) == 2:
                     status_code, detail = value
 
                     if not (
-                            isinstance(status_code, int) or
-                            (isinstance(status_code, str) and status_code.isdigit())
+                        isinstance(status_code, int)
+                        or (isinstance(status_code, str) and status_code.isdigit())
                     ) or isinstance(status_code, bool):
-                        raise TypeError(f"Invalid status_code type: {type(status_code)}")
+                        raise TypeError(
+                            f"Invalid status_code type: {type(status_code)}"
+                        )
 
                     if not isinstance(detail, str):
                         raise TypeError(f"Invalid detail type: {type(detail)}")
@@ -43,7 +46,9 @@ class Responses:
                     status_code, detail = cls.__original_attrs[attr]
 
                 else:
-                    raise TypeError(f"Attribute {attr} must be a (status_code, detail) tuple. Got: {value}")
+                    raise TypeError(
+                        f"Attribute {attr} must be a (status_code, detail) tuple. Got: {value}"
+                    )
 
                 if status_code not in responses_dict.keys():
                     responses_dict[status_code] = {
@@ -51,10 +56,16 @@ class Responses:
                         "content": {"application/json": {"examples": {}}},
                     }
 
-                responses_dict[status_code]["content"]["application/json"]["examples"][attr.lower()] = {
+                responses_dict[status_code]["content"]["application/json"]["examples"][
+                    attr.lower()
+                ] = {
                     "summary": attr.replace("_", " "),
                     "value": {"detail": detail},
                 }
 
-                setattr(cls, attr, HTTPException(status_code=int(status_code), detail=detail))
+                setattr(
+                    cls,
+                    attr,
+                    HTTPException(status_code=int(status_code), detail=detail),
+                )
         return responses_dict
