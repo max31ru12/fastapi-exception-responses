@@ -1,6 +1,6 @@
 [project]
 name = "fastapi-exception-responses"
-version = "0.1.0"
+version = "0.1.2"
 description = "fastapi-responses generates HTTPExceptions and OpenAPI description for status codes"
 authors = [
     {name = "max31ru12", email = "maxevg72@gmail.com"}
@@ -11,6 +11,7 @@ requires-python = ">=3.11"
 dependencies = [
     "starlette (>=0.46.2,<0.47.0)"
 ]
+urls = {"Repository" = "https://github.com/max31ru12/fastapi-responses"}
 
 
 [build-system]

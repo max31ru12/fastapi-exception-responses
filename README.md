@@ -35,5 +35,4 @@ async def get_demo():
 
 ### Result
 
-
-![img.png](img.png)
+https://github.com/max31ru12/fastapi-responses/blob/main/img.png
