@@ -1,6 +1,7 @@
 from typing import Any
 
 from starlette.exceptions import HTTPException
+from http import HTTPStatus
 
 
 class Responses:
@@ -52,7 +53,7 @@ class Responses:
 
                 if status_code not in responses_dict.keys():
                     responses_dict[status_code] = {
-                        "description": f"{status_code} status code description",
+                        "description": f"{HTTPStatus(status_code).phrase}",
                         "content": {"application/json": {"examples": {}}},
                     }
 
