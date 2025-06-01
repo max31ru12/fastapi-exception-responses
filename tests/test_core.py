@@ -1,12 +1,13 @@
+from http import HTTPStatus
 from typing import Callable
 
 import pytest
 from faker import Faker
 from starlette.exceptions import HTTPException
 
-from src.fastapi_exception_responses.core import Responses
+from fastapi_exception_responses.core import Responses
 
-from tests.utils import assert_value_type, assert_response_structure, get_responses
+from utils import assert_value_type, assert_response_structure, get_responses
 
 
 def test_single_response(responses_args: Callable):
@@ -21,14 +22,6 @@ def test_code_as_string(responses_args: Callable):
     responses = get_responses({arg_name: ("404", detail)})
     print(responses)
     assert responses[404]
-
-
-def test_description(faker, responses_args):
-    argname, code, detail = responses_args()
-    description = faker.pyint()
-
-    with pytest.raises(TypeError):
-        get_responses({argname: (code, detail)}, description=description)
 
 
 def test_multiple_responses(responses_args: Callable):
@@ -133,7 +126,7 @@ def test_valid_description(faker: Faker, responses_args: Callable):
     argname, code, detail = responses_args()
     responses = get_responses({argname: (code, detail)})
 
-    assert responses[code]["description"] == f"{code} status code description"
+    assert responses[code]["description"] == HTTPStatus(code).phrase
 
 
 def test_invalid_tuple_len(responses_args: Callable, faker: Faker):

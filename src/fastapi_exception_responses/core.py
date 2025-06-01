@@ -28,6 +28,11 @@ class Responses:
                 if isinstance(value, tuple) and len(value) == 2:
                     status_code, detail = value
 
+                    try:
+                        HTTPStatus(int(status_code))
+                    except ValueError as e:
+                        raise e
+
                     if not (
                         isinstance(status_code, int)
                         or (isinstance(status_code, str) and status_code.isdigit())

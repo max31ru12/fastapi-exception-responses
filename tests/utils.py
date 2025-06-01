@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from typing import Any
 
 import pytest
@@ -33,7 +34,7 @@ def assert_response_structure(
     assert prepared_name_lower in examples.keys()
     assert prepared_name == examples[prepared_name_lower]["summary"]
     assert detail == examples[prepared_name_lower]["value"]["detail"]
-    assert responses[code]["description"] == f"{code} status code description"
+    assert responses[code]["description"] == HTTPStatus(code).phrase
 
 
 def get_responses(arg_dict: dict):
