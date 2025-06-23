@@ -11,9 +11,8 @@ def prepare_arg_name(arg_name: str):
 
 
 def assert_value_type(value: Any):
-    responses_class = type("ResponsesClass", (Responses,), {"VALID_ARG_NAME": value})
     with pytest.raises(TypeError):
-        responses_class.get_responses()
+        type("ResponsesClass", (Responses,), {"VALID_ARG_NAME": value})
 
 
 def assert_response_structure(
@@ -38,4 +37,4 @@ def assert_response_structure(
 
 
 def get_responses(arg_dict: dict):
-    return type("MultipleResponses", (Responses,), arg_dict).get_responses()
+    return type("MultipleResponses", (Responses,), arg_dict).responses

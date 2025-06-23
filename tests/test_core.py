@@ -60,7 +60,7 @@ def test_attr_is_replaced_with_http_exception(responses_args: Callable):
     class R(Responses):
         VALUE = code, detail
 
-    R.get_responses()
+    R.responses
 
     assert isinstance(R.VALUE, HTTPException)
     assert R.VALUE.status_code == int(code)
@@ -76,7 +76,7 @@ def test_multiple_inheritance(responses_args: Callable):
         "SimpleResponse", (ParentResponse,), {child_argname: (child_code, child_detail)}
     )
 
-    responses = ChildResponses.get_responses()
+    responses = ChildResponses.responses
 
     assert_response_structure(responses, code, argname, detail)
     assert_response_structure(responses, child_code, child_argname, child_detail)
@@ -108,7 +108,7 @@ def test_callable_attr(responses_args: Callable):
 
     responses_class = type("ResponsesClass", (Responses,), {argname: mock_func})
 
-    assert responses_class.get_responses() == {}
+    assert responses_class.responses == {}
 
 
 def test_invalid_code_type(faker: Faker):

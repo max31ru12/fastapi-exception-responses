@@ -6,9 +6,13 @@ from http import HTTPStatus
 
 class Responses:
     __original_attrs = {}
+    responses: dict
+
+    def __init_subclass__(cls, **kwargs):
+        cls.responses = cls.__get_responses()
 
     @classmethod
-    def get_responses(cls) -> dict[int | str, dict[str, Any]]:
+    def __get_responses(cls) -> dict[int | str, dict[str, Any]]:
         """
         Generates documentation for OpenAPI and Endpoints starlette HTTPExceptions based on class attributes
         defined as tuples of status code and detail
@@ -22,6 +26,7 @@ class Responses:
                 not attr.startswith("__")
                 and not callable(getattr(cls, attr))
                 and not attr.startswith("_")
+                and attr != "responses"
             ):
                 value = getattr(cls, attr)
 
