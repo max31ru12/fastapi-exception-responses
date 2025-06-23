@@ -23,7 +23,7 @@ class DemoResponses(Responses):
     WRONG_CREDENTIAL = 401, "Invalid username or password."
 
 
-@router.get("/", responses=DemoResponses.get_responses())
+@router.get("/", responses=DemoResponses.responses)
 async def get_demo():
     if condition_one:
         raise DemoResponses.NOT_VALID_USERNAME
