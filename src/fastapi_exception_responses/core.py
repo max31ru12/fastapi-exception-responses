@@ -46,7 +46,7 @@ class Responses:
                             f"Invalid status_code type: {type(status_code)}"
                         )
 
-                    if not isinstance(detail, str):
+                    if not isinstance(detail, str) or not isinstance(detail, dict):
                         raise TypeError(f"Invalid detail type: {type(detail)}")
 
                     if isinstance(status_code, str):
